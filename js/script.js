@@ -1,7 +1,8 @@
 const searchButton = document.querySelector('.search');
 let sizeNavigation = document.querySelector('.sizeNavigation');
-let divPicture = document.querySelector('.picture');
-const chosenSizeText = document.querySelector('.chosenSize')
+let caruselItem = document.querySelector('#carouselItem');
+
+const chosenSizeText = document.querySelector('.chosenSize');
 let chosenSize = 'm';
 
 sizeNavigation.addEventListener('click', function(event){
@@ -12,7 +13,6 @@ sizeNavigation.addEventListener('click', function(event){
         console.log(event.target.tagName);
         if(eventTarget.innerText === 'small'){
             chosenSize = 'm';
-            divPicture.style.maxWidth = '950px';
             chosenSizeText.innerText = 'Small';
         }
         else if(eventTarget.innerText === 'medium'){
@@ -30,6 +30,17 @@ searchButton.addEventListener('click', function(){
     const textInput = document.querySelector('input');
     const numberOfPicturesInput = document.querySelector('.numberOfPictures');
     searchPicture(textInput.value, numberOfPicturesInput.value, chosenSize);
+
+    anime({
+        targets: '#search',
+        left: '240px',
+        backgroundColor: '#FFF',
+        borderRadius: ['0%', '50%'],
+        easing: 'easeInOutQuad',
+        loop: 4
+      });
+      console.log(anime);
+    
 });
 
 function searchPicture(pictureWord, numberOfPictures){
@@ -56,22 +67,31 @@ function searchPicture(pictureWord, numberOfPictures){
 
 function displayPictures(pictureArray, numberOfPictures){
         
-    console.log('picture', numberOfPictures);
+    console.log('caruselItem', numberOfPictures);
     
     const allImgEl = document.querySelectorAll('img');
     for(let i = 0; i<allImgEl.length; i++){
         const element = allImgEl[i];
+        console.log('element', element)
         element.remove();
     }
     
     for(let i = 0; i<numberOfPictures; i++){
+        
         let photo = pictureArray.photos.photo[i];
+        console.log(photo);
+        
+        let itemDiv = document.createElement('div');
+        itemDiv.setAttribute('id', '#carouselItem');
         let pic = document.createElement('img');
-        divPicture.appendChild(pic);
+        console.log(pic);
+        caruselItem.appendChild(itemDiv);
+        itemDiv.appendChild(pic);
+
+        
         pic.src=`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_${chosenSize}.jpg`;
     }
     
 }
-
 
 

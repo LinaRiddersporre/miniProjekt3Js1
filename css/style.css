@@ -33,3 +33,8 @@ p{
     margin: 0;
     padding: 0;
 }
+
+#search{
+    width: 240px;
+    height: 10px;
+}
